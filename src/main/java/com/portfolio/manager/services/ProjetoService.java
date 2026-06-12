@@ -41,7 +41,7 @@ public class ProjetoService {
         Membro membro = membroRepository.findById(idMembro)
                 .orElseThrow(() -> new RuntimeException("Membro não encontrado."));
 
-        // Validação 1: Apenas membros com atribuição "funcionário"
+        // Validação 1: Apenas membros com atribuição "funcionário" o requisito do desafio especifica a palavra com acento então mantemos a validação exatamente como descrita, mesmo que isso possa causar confusão ou erros de digitação
         if (!"funcionário".equalsIgnoreCase(membro.getAtribuicao())) {
             throw new IllegalArgumentException("Apenas membros com a atribuição 'funcionário' podem ser associados a um projeto.");
         }
