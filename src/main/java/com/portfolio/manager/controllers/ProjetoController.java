@@ -32,7 +32,6 @@ import com.portfolio.manager.repositories.MembroRepository;
 import com.portfolio.manager.repositories.ProjetoRepository;
 import com.portfolio.manager.services.ProjetoService;
 
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -149,7 +148,7 @@ public class ProjetoController {
         return ResponseEntity.ok().build();
     }
 
-    @Hidden // Endpoint oculto para testes internos de consulta nativa otimizada
+    //Endpoint para gerar um relatório resumido do portfólio
     @GetMapping("/relatorio")
     @Operation(summary = "Gerar relatório resumido do portfólio", description = "Retorna métricas consolidadas diretamente do banco através de query nativa otimizada.")
     public ResponseEntity<PortfolioRelatorioDTO> obterRelatorioConsolidado() {
