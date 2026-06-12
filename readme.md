@@ -104,3 +104,22 @@ DELETE /api/projetos/{id} - Exclusão lógica baseada nas regras do PMO.
 POST /api/projetos/{idProjeto}/membros/{idMembro} - Associação de equipe (apenas funcionários).
 
 GET /api/projetos/relatorio - Extração de métricas de portfólio via query nativa otimizada.
+
+## 🛡️ Robustez, Tratamento de Erros e Testes
+
+O projeto foi blindado contra falhas operacionais e inconsistências de dados, garantindo respostas limpas e padronizadas para o cliente:
+
+* **Global Exception Handler:** Interceptação centralizada de exceções. Trata erros de validação de campos (`@Valid`) e violações de integridade no banco de dados (`DataIntegrityViolationException`), gerando retornos amigáveis caso ocorra uma tentativa de excluir um membro ativamente alocado em um projeto.
+* **Testes Unitários (JUnit 5 & Mockito):** Cobertura focada na `ProjetoService` para validar as regras críticas de negócio do desafio:
+    * Validação estrita da Máquina de Estados (fluxo de transição de status).
+    * Bloqueio preventivo de exclusão de projetos com status iniciados ou avançados.
+    * Regras de alocação de equipe (permissão apenas para atribuição 'funcionário', limite de 10 membros por projeto e teto de 3 projetos ativos por membro).
+    * Cálculo de classificação dinâmica de risco (Alto, Médio e Baixo risco).
+
+### 🚀 Como rodar os testes da aplicação
+
+Para executar a suite de testes unitários em ambiente local, utilize o comando:
+
+```bash
+mvn test
+
